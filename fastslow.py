@@ -25,6 +25,9 @@ def end_program():
     os.system('rm -f in')
     os.system('rm -f slow.out')
     os.system('rm -f fast.out')
+    gen.close()
+    slow.close()
+    fast.close()
 
 
 def main():

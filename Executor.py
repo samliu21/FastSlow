@@ -30,3 +30,4 @@ class Executor:
     def close(self):
         if self.name.endwith(CPP_EXT):
             os.system('rm -f ./' + self.root)
+            
