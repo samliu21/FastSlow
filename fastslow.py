@@ -22,9 +22,9 @@ def end_program():
     in_file.close()
     slow_out.close()
     fast_out.close()
-    # os.system('rm -f in')
-    # os.system('rm -f slow.out')
-    # os.system('rm -f fast.out')
+    os.system('rm -f in')
+    os.system('rm -f slow.out')
+    os.system('rm -f fast.out')
 
 
 def main():
