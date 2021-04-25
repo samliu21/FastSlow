@@ -25,6 +25,8 @@ class Executor:
         # print(self.exec + args)
         exe = subprocess.run(self.exec + args, **kwargs)
 
-        if self.file.endswith(CPP_EXT):
-            os.system('rm -f ./' + self.file_root)
         assert exe.returncode == 0
+
+    def close(self):
+        if self.name.endwith(CPP_EXT):
+            os.system('rm -f ./' + self.root)

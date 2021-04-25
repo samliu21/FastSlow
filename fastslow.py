@@ -7,32 +7,38 @@ in_file = open('in', 'w+')
 slow_out = open('slow.out', 'w+')
 fast_out = open('fast.out', 'w+')
 
+if len(sys.argv) < 5:
+    print('A generator, two solutions, and the number of cases is required')
+    exit(1)
+
+_, gen_file, slow_file, fast_file, T = sys.argv
+
+gen = Executor(gen_file)
+slow = Executor(slow_file)
+fast = Executor(fast_file)
+
 
 def end_program():
     in_file.close()
     slow_out.close()
     fast_out.close()
+    # os.system('rm -f in')
+    # os.system('rm -f slow.out')
+    # os.system('rm -f fast.out')
 
 
-def main(args):
-    if len(args) < 5:
-        print('A generator, two solutions, and the number of cases is required')
-        return 1
-
-    _, gen_file, slow_file, fast_file, T = args
-    
-
-    gen = Executor(gen_file)
-    slow = Executor(slow_file)
-    fast = Executor(fast_file)
-
+def main():
     for i in range(int(T)):
+        in_file.truncate(0)
+        slow_out.truncate(0)
+        fast_out.truncate(0)
         gen.run(stdout=in_file)
         in_file.seek(0)
         slow.run(stdin=in_file, stdout=slow_out)
         in_file.seek(0)
-        fast.run(stdin=in_file, stdout=fast_out)
         slow_out.seek(0)
+        fast.run(stdin=in_file, stdout=fast_out)
+        in_file.seek(0)
         fast_out.seek(0)
 
         if slow_out.read() != fast_out.read():
@@ -49,9 +55,8 @@ def main(args):
             sys.exit()
 
     end_program()
-    sys.exit()
+    print('PASSED ALL', T, 'CASES!')
+    exit(0)
 
 
-main(sys.argv)
-
-
+main()
