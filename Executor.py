@@ -28,6 +28,6 @@ class Executor:
         assert exe.returncode == 0
 
     def close(self):
-        if self.name.endwith(CPP_EXT):
-            os.system('rm -f ./' + self.root)
+        if self.file.endswith(CPP_EXT):
+            os.system('rm -f ' + self.file_root)
             
