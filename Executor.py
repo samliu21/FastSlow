@@ -11,7 +11,7 @@ class Executor:
         if self.file.endswith(CPP_EXT):
             self.file_root = self.file[ : -len(CPP_EXT)]
             
-            compile = subprocess.run(['g++', '-std=c++17', '-O2', '-Wall', '-o', self.file_root, self.file])
+            compile = subprocess.run(['g++', '-std=c++17', '-O2', '-o', self.file_root, self.file])
             assert compile.returncode == 0
             
             self.exec = ['./' + self.file_root]
