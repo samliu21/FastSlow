@@ -3,6 +3,7 @@ import os
 
 CPP_EXT = '.cpp'
 PY_EXT = '.py'
+JAVA_EXT = '.java'
 
 class Executor:
     def __init__(self, file):
@@ -16,8 +17,16 @@ class Executor:
             
             self.exec = ['./' + self.file_root]
 
-        else:
+        elif self.file.endswith(PY_EXT):
             self.exec = ['python3', self.file]
+
+        else:
+            self.file_root = self.file[ : -len(JAVA_EXT)]
+
+            compile = subprocess.run(['javac', self.file])
+            assert compile.returncode == 0
+
+            self.exec = ['java', self.file_root]
 
     def run(self, args=[], **kwargs):
         kwargs.setdefault('text', True)
@@ -28,6 +37,6 @@ class Executor:
         assert exe.returncode == 0
 
     def close(self):
-        if self.file.endswith(CPP_EXT):
+        if not self.file.endswith(PY_EXT):
             os.system('rm -f ' + self.file_root)
             
