@@ -34,7 +34,7 @@ class Executor:
         # print(self.exec + args)
         exe = subprocess.run(self.exec + args, **kwargs)
 
-        assert exe.returncode == 0
+        return exe.returncode == 0
 
     def close(self):
         if not self.file.endswith(PY_EXT):

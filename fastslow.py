@@ -18,7 +18,7 @@ slow = Executor(slow_file)
 fast = Executor(fast_file)
 
 
-def end_program():
+def end_program(n):
     in_file.close()
     slow_out.close()
     fast_out.close()
@@ -28,6 +28,9 @@ def end_program():
     gen.close()
     slow.close()
     fast.close()
+    if n == 1:
+        print('Error')
+    exit(n)
 
 
 def main():
@@ -35,12 +38,15 @@ def main():
         in_file.truncate(0)
         slow_out.truncate(0)
         fast_out.truncate(0)
-        gen.run(stdout=in_file)
+        if not gen.run(stdout=in_file):
+            end_program(1)
         in_file.seek(0)
-        slow.run(stdin=in_file, stdout=slow_out)
+        if not slow.run(stdin=in_file, stdout=slow_out):
+            end_program(1)
         in_file.seek(0)
         slow_out.seek(0)
-        fast.run(stdin=in_file, stdout=fast_out)
+        if not fast.run(stdin=in_file, stdout=fast_out):
+            end_program(1)
         in_file.seek(0)
         fast_out.seek(0)
 
@@ -54,12 +60,10 @@ def main():
             os.system('cat fast.out')
             print('\nDIFFERENCE')
             os.system('diff -c slow.out fast.out')
-            end_program()
-            sys.exit()
+            end_program(1)
 
-    end_program()
     print('PASSED ALL', T, 'CASES!')
-    exit(0)
+    end_program(0)
 
 
 main()
